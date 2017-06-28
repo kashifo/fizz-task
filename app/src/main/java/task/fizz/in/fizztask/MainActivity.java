@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -44,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
         topView = (RelativeLayout) findViewById(R.id.activity_main);
         recyclerView = (RecyclerView) findViewById(R.id.rv_home_list);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         emptyView = (TextView) findViewById(R.id.tv_empty);
 
@@ -114,10 +118,10 @@ public class MainActivity extends AppCompatActivity {
         public void onPostExecute(Void result) {
             super.onPostExecute(result);
 
-            /*if (!restaurantList.isEmpty()) {
-                LeadsAdapter adapter = new LeadsAdapter(HomeFragment.this, restaurantList);
+            if (!restaurantList.isEmpty()) {
+                HomeListAdapter adapter = new HomeListAdapter(MainActivity.this, restaurantList);
                 recyclerView.setAdapter(adapter);
-            }*/
+            }
         }
 
     }//parseTask

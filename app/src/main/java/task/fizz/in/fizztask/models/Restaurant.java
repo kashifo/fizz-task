@@ -21,6 +21,7 @@ public class Restaurant {
     private String name;
     private String offerPercentage;
     private String specialOffer;
+    private Coordinates coordinates;
 
     public String getAddress() {
         return address;
@@ -140,5 +141,13 @@ public class Restaurant {
 
     public void setSpecialOffer(String specialOffer) {
         this.specialOffer = specialOffer;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 }
