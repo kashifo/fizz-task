@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="250sp">
+
+    <ImageView
+        android:id="@+id/bg_img"
+        android:layout_width="match_parent"
+        android:layout_height="250sp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_hero" />
+
+    <ImageView
+        android:id="@+id/bg_img_blur"
+        android:layout_width="match_parent"
+        android:layout_height="250sp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/blur_bg" />
+
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/tv_name"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/ShadowText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:text="Name"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/tv_address"
+        style="@style/ShadowText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="Address"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_address"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_dial"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_action_call" />
+
+
+        <ImageView
+            android:id="@+id/iv_map"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/ic_action_location" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="task.fizz.in.fizztask.MainActivity"
+    >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_home_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        style="?android:attr/progressBarStyleLarge"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/statusView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="?attr/colorPrimary"
+        android:text="No Data"
+        android:visibility="gone"
+        />
+
+
+</RelativeLayout>
