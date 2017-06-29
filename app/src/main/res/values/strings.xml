@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Fizz Task</string>
+    <string name="view_directions">VIEW DIRECTIONS</string>
+    <string name="no_data">No Data</string>
+    <string name="other_details">Other Details</string>
+    <string name="address">Address</string>
+    <string name="offers">Offers</string>
 </resources>

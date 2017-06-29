@@ -1,10 +1,9 @@
 package task.fizz.in.fizztask;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -30,6 +28,7 @@ import task.fizz.in.fizztask.network.NetworkCallback;
 import task.fizz.in.fizztask.network.VolleyRequest;
 
 import static android.nfc.tech.MifareUltralight.PAGE_SIZE;
+import static task.fizz.in.fizztask.Commons.notEmpty;
 import static task.fizz.in.fizztask.Constants.DEFAULT_CATEGORY;
 import static task.fizz.in.fizztask.Constants.DEFAULT_LATITUDE;
 import static task.fizz.in.fizztask.Constants.DEFAULT_LIMIT;
@@ -37,20 +36,19 @@ import static task.fizz.in.fizztask.Constants.DEFAULT_LONGITUDE;
 import static task.fizz.in.fizztask.Constants.DEFAULT_TOKEN;
 import static task.fizz.in.fizztask.Constants.URL_BASE;
 
-
+//First activity, shows when app is launched
 public class MainActivity extends AppCompatActivity implements ItemClickListener {
 
-    private final String TAG = this.getClass().getSimpleName();
-    RelativeLayout topView;
-    RecyclerView recyclerView;
-    LinearLayoutManager layoutManager;
-    int currentPage = 1;
-    boolean isLoading, isLastPage;
-    ProgressBar progressBar, progressBarMini;
-    TextView emptyView;
-    HomeListAdapter adapter;
-
-    List<Restaurant> restaurantList;
+    private static final String TAG = MainActivity.class.getSimpleName();
+    private RelativeLayout topView;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
+    private int currentPage = 1;
+    private boolean isLoading, isLastPage;
+    private ProgressBar progressBar, progressBarMini;
+    private TextView emptyView;
+    private HomeListAdapter adapter;
+    private List<Restaurant> restaurantList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        //recyclerView.setItemAnimator(new SlideInUpAnimator());
         recyclerView.addOnScrollListener(recyclerViewOnScrollListener);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -73,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
         getData();
     }
 
+    //pagination
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -90,20 +88,21 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
                 if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                         && firstVisibleItemPosition >= 0
                         && totalItemCount >= PAGE_SIZE) {
-                    currentPage+=1;
+                    currentPage += 1;
                     getData();
                 }
             }
         }
     };
 
-    void getData() {
+    //creates url and requests calls API
+    private void getData() {
 
         String URL = URL_BASE + "/" + DEFAULT_LATITUDE + "/" + DEFAULT_LONGITUDE + "/" + DEFAULT_CATEGORY + "/" + currentPage + "/" + DEFAULT_LIMIT + DEFAULT_TOKEN;
 
-        Log.i(TAG, "getData()");
+        Log.i(TAG, "getData()-" + URL);
         isLoading = true;
-        if( currentPage>1 ){
+        if (currentPage > 1) {
             progressBarMini.setVisibility(View.VISIBLE);
         }
 
@@ -112,39 +111,42 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
 
     }
 
-    NetworkCallback dataCallback = new NetworkCallback(this) {
+    //called when response is received from API
+    private NetworkCallback dataCallback = new NetworkCallback(this) {
         @Override
         public void onAPIResponse(boolean err, String str) {
             super.onAPIResponse(err, str);
 
             Log.d(TAG, "onAPIResponse=" + str);
 
-            if (err) {
+            if ( notEmpty(str) ) {
 
-                if (str != null) {
+                if (err) {
+
                     if (str.contains("UnknownHostException")) {
-                        showDialog("No Network");
+                        Snackbar.make(topView, "No Network", Snackbar.LENGTH_LONG).show();
                     } else {
-                        showDialog("Error - " + err);
+                        Snackbar.make(topView, "Error - " + str, Snackbar.LENGTH_LONG).show();
                     }
+                    //status code is checked in parsing section, not here
+
                 } else {
-                    showDialog("Unknown Error");
+
+                    //when there is no error, parse data
+                    new parseTask(str).execute();
+
                 }
-
-            } else {
-
-                new parseTask(str).execute();
-
             }
         }
     };
 
 
-    class parseTask extends AsyncTask<Void, Void, Void> {
+    //for background parsing and serializing
+    private class parseTask extends AsyncTask<Void, Void, Void> {
 
         String data;
 
-        public parseTask(String data) {
+        parseTask(String data) {
             this.data = data;
         }
 
@@ -155,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
 
         @Override
         public Void doInBackground(Void... args) {
-            //setData(rawData);
             serializeData(data);
             return null;
         }
@@ -166,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
 
             isLoading = false;
 
-            if ( restaurantList!=null && !restaurantList.isEmpty()) {
+            if ( notEmpty(restaurantList) ) {
 
                 if (adapter == null) {
                     progressBar.setVisibility(View.GONE);
@@ -177,64 +178,64 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
                     progressBarMini.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
                 }
+            }else{
+                //show no data when there is no data on the first load, not during pagination
+                if( adapter==null ){
+                    emptyView.setVisibility(View.VISIBLE);
+                }
             }
         }
 
     }//parseTask
 
+    //click callback received from adapter
     @Override
     public void onClick(int position) {
-        Log.d( TAG, "onClick received" );
-        Intent intent = new Intent(this, DetailActivity.class);
+        Log.d(TAG, "onClick received");
+        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
         intent.putExtra("data", restaurantList.get(position));
         startActivity(intent);
     }
 
-    void serializeData(String data) {
+    //serialized using gson
+    private void serializeData(String data) {
 
         try {
 
-            JSONObject jsonObject = new JSONObject(data);
-            JSONArray dataArray = jsonObject.getJSONArray("data");
+            JSONObject rootObject = new JSONObject(data);
 
-            if( dataArray.length() > 0 ) {
+            if( rootObject.getBoolean("status") && rootObject.getInt("statusCode")==200 ) {
 
-                Gson gson = new Gson();
-                Type listType = new TypeToken<List<Restaurant>>() {
-                }.getType();
-                List<Restaurant> restaurantListTemp = gson.fromJson(dataArray.toString(), listType);
+                JSONArray dataArray = rootObject.getJSONArray("data");
 
-                if ( restaurantListTemp!=null && !restaurantListTemp.isEmpty()) {
+                if (dataArray.length() > 0) {
 
-                    if(restaurantList==null){
-                        restaurantList = new ArrayList<>();
+                    Gson gson = new Gson();
+                    Type listType = new TypeToken<List<Restaurant>>() {
+                    }.getType();
+                    List<Restaurant> restaurantListTemp = gson.fromJson(dataArray.toString(), listType);
+
+                    if (notEmpty(restaurantListTemp)) {
+
+                        if (restaurantList == null) {
+                            restaurantList = new ArrayList<>();
+                        }
+
+                        restaurantList.addAll(restaurantListTemp);
+                        Log.d(TAG, "restaurantList.size=" + restaurantList.size());
                     }
-
-                    restaurantList.addAll(restaurantListTemp);
-                    Log.d(TAG, "restaurantList.size=" + restaurantList.size());
+                } else {
+                    isLastPage = true;
                 }
             }else{
-                isLastPage = true;
+                Snackbar.make(topView, "Error - Status Code = " + rootObject.getInt("statusCode"), Snackbar.LENGTH_LONG).show();
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "Error - " + e.getMessage(), Toast.LENGTH_LONG).show();
+            Snackbar.make(topView, "Error - " + e.getMessage(), Snackbar.LENGTH_LONG).show();
         }
 
     }
-
-    void showDialog(String message) {
-        new AlertDialog.Builder(this)
-                .setMessage(message)
-                .setPositiveButton("close", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                })
-                .show();
-    }
-
 
 }

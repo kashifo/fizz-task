@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_detail"
@@ -62,7 +61,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="Name"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
@@ -76,7 +74,6 @@
                     android:layout_below="@+id/tv_name"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
-                    android:text="Area"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/white" />
 
@@ -88,7 +85,6 @@
                     android:layout_below="@+id/tv_area"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
-                    android:text="Time"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/white" />
 
@@ -135,7 +131,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:padding="5dp"
-                        android:text="Offers"
+                        android:text="@string/offers"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="?attr/colorPrimary" />
 
@@ -169,8 +165,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
+                        android:text="@string/address"
                         android:padding="5dp"
-                        android:text="Address"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="?attr/colorPrimary" />
 
@@ -189,6 +185,13 @@
                         android:padding="5dp"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textIsSelectable="true" />
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/btn_directions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/view_directions"
+                        android:textColor="@color/white" />
 
 
                 </LinearLayout>
@@ -212,8 +215,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
+                        android:text="@string/other_details"
                         android:padding="5dp"
-                        android:text="Other Details"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="?attr/colorPrimary" />
 

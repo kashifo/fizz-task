@@ -1,13 +1,13 @@
 package task.fizz.in.fizztask.models;
 
 import java.io.Serializable;
+import java.util.List;
 
-/**
- * Created by ANDROID on 6/28/2017.
- */
+
 
 public class Restaurant implements Serializable {
 
+    //variable names are same as API response to enable auto-serialization by gson
     private String address;
     private String area;
     private boolean awardedLoyalty;
@@ -17,12 +17,16 @@ public class Restaurant implements Serializable {
     private double distanceFromUser;
     private String heroImage;
     private String id;
-    private String isActive;
-    private String isDiscounted;
+    private boolean isActive;
+    private boolean isDiscounted;
+    private boolean isFavorite;
     private String logo;
     private String name;
     private String offerPercentage;
     private String specialOffer;
+    private double latitude;
+    private double longitude;
+    private List<List<String>> timings;
 
     public String getAddress() {
         return address;
@@ -96,21 +100,6 @@ public class Restaurant implements Serializable {
         this.id = id;
     }
 
-    public String getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(String isActive) {
-        this.isActive = isActive;
-    }
-
-    public String getIsDiscounted() {
-        return isDiscounted;
-    }
-
-    public void setIsDiscounted(String isDiscounted) {
-        this.isDiscounted = isDiscounted;
-    }
 
     public String getLogo() {
         return logo;
@@ -144,4 +133,51 @@ public class Restaurant implements Serializable {
         this.specialOffer = specialOffer;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public boolean isDiscounted() {
+        return isDiscounted;
+    }
+
+    public void setDiscounted(boolean discounted) {
+        isDiscounted = discounted;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public List<List<String>> getTimings() {
+        return timings;
+    }
+
+    public void setTimings(List<List<String>> timings) {
+        this.timings = timings;
+    }
 }

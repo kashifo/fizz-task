@@ -1,9 +1,7 @@
 package task.fizz.in.fizztask;
 
-/**
- * Created by Kashif on 5/23/2017.
- */
 
+//I keep constants here
 public class Constants {
 
     public static final String URL_BASE = "http://apis-development.fizz.in/hangouts";
@@ -12,8 +10,6 @@ public class Constants {
     public static final String DEFAULT_CATEGORY = "food-and-drink";
     public static final String DEFAULT_LIMIT = "10";
     public static final String DEFAULT_TOKEN = "?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJGaXp6IGUtVmVudHVyZXMgUHZ0IEx0ZC4iLCJ1c2VySWQiOiI1NzZkMWE4MTI2NDk1MGU3NjM5NGZiMzMiLCJpYXQiOjE0NjgyMzQ4MDd9.ssCNouUOIfxG2H3nI7IkMdqffzL4l5cRkbwe3Xf3Uw4";
-
-    public static final String URL_EXAMPLE = URL_BASE +"/"+DEFAULT_LATITUDE +"/"+ DEFAULT_LONGITUDE +"/"+DEFAULT_CATEGORY +"/"+ "1" +"/"+DEFAULT_LIMIT +DEFAULT_TOKEN;
 
 
 }

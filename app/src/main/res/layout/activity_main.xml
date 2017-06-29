@@ -4,35 +4,31 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="task.fizz.in.fizztask.MainActivity"
-    >
+    android:background="@color/black"
+    tools:context="task.fizz.in.fizztask.MainActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_home_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/progressBarMini"
-        />
+        android:layout_above="@+id/progressBarMini" />
 
     <ProgressBar
         android:id="@+id/progressBarMini"
+        style="?android:attr/progressBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:visibility="gone"
+        android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        style="?android:attr/progressBarStyleSmall"
-        />
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        style="?android:attr/progressBarStyleLarge"
-        />
+        android:layout_centerVertical="true" />
 
     <TextView
         android:id="@+id/tv_empty"
@@ -40,11 +36,10 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:text="@string/no_data"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="?attr/colorPrimary"
-        android:text="No Data"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
 
 </RelativeLayout>

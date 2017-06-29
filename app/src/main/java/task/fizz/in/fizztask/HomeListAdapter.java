@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,26 +20,31 @@ import java.util.List;
 
 import task.fizz.in.fizztask.models.Restaurant;
 
+import static task.fizz.in.fizztask.Commons.notEmpty;
+
 
 public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.MyViewHolder> {
 
-    private final String TAG = getClass().getSimpleName();
+    private static final String TAG = HomeListAdapter.class.getSimpleName();
     private Context context;
     private List<Restaurant> dataList = new ArrayList<>();
     private ItemClickListener clickListener;
-    
+
     public HomeListAdapter(Context context, List<Restaurant> pdataList) {
         this.context = context;
         this.dataList = pdataList;
     }
 
-    public void setClickListener(ItemClickListener clickListener){
+    public void setClickListener(ItemClickListener clickListener) {
         this.clickListener = clickListener;
     }
 
     @Override
     public int getItemCount() {
-        return dataList.size();
+        if (dataList != null)
+            return dataList.size();
+        else
+            return 0;
     }
 
     @Override
@@ -76,8 +82,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.MyView
 
         @Override
         public void onClick(View view) {
-            if( clickListener!=null ){
-                clickListener.onClick( getAdapterPosition() );
+            if (clickListener != null) {
+                clickListener.onClick(getAdapterPosition());
             }
         }
     }//ViewHolder
@@ -109,9 +115,11 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.MyView
                 @Override
                 public void onClick(View view) {
 
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + rowData.getContactNumber() ));
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity( intent );
+                    if( notEmpty(rowData.getContactNumber()) ) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + rowData.getContactNumber()));
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }
 
                 }
             });
@@ -121,16 +129,18 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.MyView
                 @Override
                 public void onClick(View view) {
                     try {
-                        //String latitude = rowData.getLatitude();
-                        //Log.i( TAG, "latitude="+latitude );
+                        String latitude = String.valueOf(rowData.getLatitude());
+                        String longitude = String.valueOf(rowData.getLongitude());
+                        Log.i(TAG, "latitude=" + latitude + "longitude=" + longitude);
 
-                        /*String uri = String.format(Locale.ENGLISH, "geo:%s,%s", itemList.get(pos).getLatitude(), itemList.get(pos).getLongitude() );
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                        String geoUri = "http://maps.google.com/maps?q=loc:" + latitude + "," + longitude + " (" + rowData.getName() + ")";
+                        ;
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(geoUri));
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);*/
+                        context.startActivity(intent);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Toast.makeText( context, "Error:"+e.getMessage(), Toast.LENGTH_LONG ).show();
+                        Toast.makeText(context, "Error:" + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             });

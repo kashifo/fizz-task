@@ -3,8 +3,7 @@
     android:id="@+id/rl_listRow"
     android:layout_width="match_parent"
     android:layout_height="250sp"
-    android:clickable="true"
-    >
+    android:clickable="true">
 
     <ImageView
         android:id="@+id/iv_bgImg"
@@ -38,7 +37,6 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:gravity="center"
-        android:text="Name"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/white"
         android:textStyle="bold" />
@@ -52,7 +50,6 @@
         android:layout_below="@+id/tv_name"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="Address"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/white" />
 
@@ -68,24 +65,22 @@
             android:id="@+id/ib_dial"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@null"
             android:layout_marginRight="5dp"
-            android:scaleType="centerInside"
+            android:background="@null"
             android:padding="8dp"
-            android:src="@drawable/phone"
-            />
+            android:scaleType="centerInside"
+            android:src="@drawable/phone" />
 
 
         <ImageButton
             android:id="@+id/ib_map"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@null"
             android:layout_marginLeft="5dp"
-            android:scaleType="centerInside"
+            android:background="@null"
             android:padding="8dp"
-            android:src="@drawable/location"
-            />
+            android:scaleType="centerInside"
+            android:src="@drawable/location" />
 
 
     </LinearLayout>
