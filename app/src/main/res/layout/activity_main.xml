@@ -11,8 +11,19 @@
         android:id="@+id/rv_home_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/progressBarMini"
         />
 
+    <ProgressBar
+        android:id="@+id/progressBarMini"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:layout_margin="10dp"
+        style="?android:attr/progressBarStyleSmall"
+        />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -21,7 +32,6 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         style="?android:attr/progressBarStyleLarge"
-        android:visibility="gone"
         />
 
     <TextView

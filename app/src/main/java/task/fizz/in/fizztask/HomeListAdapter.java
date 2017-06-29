@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +23,17 @@ import task.fizz.in.fizztask.models.Restaurant;
 public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.MyViewHolder> {
 
     private final String TAG = getClass().getSimpleName();
-    Context context;
-    List<Restaurant> dataList = new ArrayList<>();
+    private Context context;
+    private List<Restaurant> dataList = new ArrayList<>();
+    private ItemClickListener clickListener;
     
     public HomeListAdapter(Context context, List<Restaurant> pdataList) {
         this.context = context;
         this.dataList = pdataList;
+    }
+
+    public void setClickListener(ItemClickListener clickListener){
+        this.clickListener = clickListener;
     }
 
     @Override
@@ -48,7 +52,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.MyView
     }
 
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         protected ImageView iv_bg;
         protected ImageView iv_logo;
@@ -66,15 +70,22 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.MyView
             tv_address = (TextView) v.findViewById(R.id.tv_address);
             ib_dial = (ImageButton) v.findViewById(R.id.ib_dial);
             ib_map = (ImageButton) v.findViewById(R.id.ib_map);
+            v.setOnClickListener(this);
 
+        }
 
+        @Override
+        public void onClick(View view) {
+            if( clickListener!=null ){
+                clickListener.onClick( getAdapterPosition() );
+            }
         }
     }//ViewHolder
 
 
     @Override
     public void onBindViewHolder(MyViewHolder paramHolder, final int position) {
-        
+
         try {
 
             final Restaurant rowData = dataList.get(position);
@@ -110,8 +121,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.MyView
                 @Override
                 public void onClick(View view) {
                     try {
-                        String latitude = rowData.getCoordinates().getLatitude();
-                        Log.i( TAG, "latitude="+latitude );
+                        //String latitude = rowData.getLatitude();
+                        //Log.i( TAG, "latitude="+latitude );
 
                         /*String uri = String.format(Locale.ENGLISH, "geo:%s,%s", itemList.get(pos).getLatitude(), itemList.get(pos).getLongitude() );
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
@@ -123,6 +134,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.MyView
                     }
                 }
             });
+
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,18 +1,20 @@
 package task.fizz.in.fizztask.models;
 
+import java.io.Serializable;
+
 /**
  * Created by ANDROID on 6/28/2017.
  */
 
-public class Restaurant {
+public class Restaurant implements Serializable {
 
     private String address;
     private String area;
     private boolean awardedLoyalty;
-    private int cashbackPercentage;
+    private float cashbackPercentage;
     private String city;
     private String contactNumber;
-    private String distanceFromUser;
+    private double distanceFromUser;
     private String heroImage;
     private String id;
     private String isActive;
@@ -21,7 +23,6 @@ public class Restaurant {
     private String name;
     private String offerPercentage;
     private String specialOffer;
-    private Coordinates coordinates;
 
     public String getAddress() {
         return address;
@@ -47,11 +48,11 @@ public class Restaurant {
         this.awardedLoyalty = awardedLoyalty;
     }
 
-    public int getCashbackPercentage() {
+    public float getCashbackPercentage() {
         return cashbackPercentage;
     }
 
-    public void setCashbackPercentage(int cashbackPercentage) {
+    public void setCashbackPercentage(float cashbackPercentage) {
         this.cashbackPercentage = cashbackPercentage;
     }
 
@@ -71,11 +72,11 @@ public class Restaurant {
         this.contactNumber = contactNumber;
     }
 
-    public String getDistanceFromUser() {
+    public double getDistanceFromUser() {
         return distanceFromUser;
     }
 
-    public void setDistanceFromUser(String distanceFromUser) {
+    public void setDistanceFromUser(double distanceFromUser) {
         this.distanceFromUser = distanceFromUser;
     }
 
@@ -143,11 +144,4 @@ public class Restaurant {
         this.specialOffer = specialOffer;
     }
 
-    public Coordinates getCoordinates() {
-        return coordinates;
-    }
-
-    public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
-    }
 }
