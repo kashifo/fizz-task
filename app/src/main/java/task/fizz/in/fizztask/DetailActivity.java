@@ -137,6 +137,8 @@ public class DetailActivity extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + restaurant.getContactNumber()));
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+        }else{
+            Toast.makeText(this, "Sorry, phone no. not available", Toast.LENGTH_LONG).show();
         }
     }
 

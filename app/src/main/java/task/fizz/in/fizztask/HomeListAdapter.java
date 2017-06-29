@@ -119,6 +119,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.MyView
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + rowData.getContactNumber()));
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
+                    }else{
+                        Toast.makeText(context, "Sorry, phone no. not available", Toast.LENGTH_LONG).show();
                     }
 
                 }
